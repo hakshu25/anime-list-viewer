@@ -51,7 +51,7 @@ export default {
         .then(res => {
           this.rows = res.data;
         })
-        .catch(e => console.log(e));
+        .catch(e => { throw new Error(e)});
     },
     displayAnimeList: function () {
         const year = document.getElementById('year').value;
