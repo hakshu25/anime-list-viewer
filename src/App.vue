@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AnimeList/>
+    <AnimeList />
   </div>
 </template>
 
@@ -8,7 +8,7 @@
 import AnimeList from "./components/AnimeList.vue";
 
 export default {
-  name: "app",
+  name: "App",
   components: {
     AnimeList
   },
