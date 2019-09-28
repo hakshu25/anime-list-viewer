@@ -1,16 +1,38 @@
 <template>
   <div class="anime">
     <select id="year">
-      <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
+      <option
+        v-for="year in years"
+        :key="year"
+        :value="year"
+      >
+        {{ year }}
+      </option>
     </select>
     <select id="cour">
-      <option value="1">春アニメ</option>
-      <option value="2">夏アニメ</option>
-      <option value="3">秋アニメ</option>
-      <option value="4">冬アニメ</option>
+      <option value="1">
+        春アニメ
+      </option>
+      <option value="2">
+        夏アニメ
+      </option>
+      <option value="3">
+        秋アニメ
+      </option>
+      <option value="4">
+        冬アニメ
+      </option>
     </select>
-    <button type="button" v-on:click="displayAnimeList">表示</button>
-    <v-client-table :data="rows" :columns="columns"></v-client-table>
+    <button
+      type="button"
+      @click="displayAnimeList"
+    >
+      表示
+    </button>
+    <v-client-table
+      :data="rows"
+      :columns="columns"
+    />
   </div>
 </template>
 
@@ -25,6 +47,14 @@ export default {
       rows: [],
       years: []
     };
+  },
+  mounted() {
+    this.years = this.createYears();
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1;
+    const cour = this.getCourInfo(month);
+    this.fetchAnimeList(year, cour);
   },
   methods: {
     getCourInfo: month => {
@@ -51,21 +81,13 @@ export default {
         .then(res => {
           this.rows = res.data;
         })
-        .catch(e => console.log(e));
+        .catch(e => { throw new Error(e)});
     },
     displayAnimeList: function () {
         const year = document.getElementById('year').value;
         const cour = document.getElementById('cour').value;
         this.fetchAnimeList(year, cour);
     }
-  },
-  mounted() {
-    this.years = this.createYears();
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const cour = this.getCourInfo(month);
-    this.fetchAnimeList(year, cour);
   }
 };
 </script>
