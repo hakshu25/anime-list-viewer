@@ -71,13 +71,11 @@ export default {
       }
     },
     createYears: () => {
-      const minDate = new Date("2014");
-      const firstYear = minDate.getFullYear();
-      const maxDate = new Date();
-      const through = maxDate.getFullYear() + 1 - firstYear;
+      const firstYear = new Date("2014").getFullYear();
+      const maxYear = new Date().getFullYear();
       const years = [];
-      for (let i = firstYear, length = firstYear + through; i < length; i++) {
-        years.push(i);
+      for (let currentYear = firstYear; currentYear <= maxYear; currentYear++) {
+        years.push(currentYear);
       }
       return years;
     },

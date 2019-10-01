@@ -29,7 +29,21 @@ describe("AnimeList.vue", () => {
     });
   });
 
-  describe("createYears", () => {});
+  describe("createYears", () => {
+    it("2014年から今年度までの年度を取得できること", () => {
+      const OriginalDate = Date;
+      const mockNow = new Date("2018/8/1 12:00:00");
+
+      jest.spyOn(global, 'Date').mockImplementation((arg) => {
+        if (arg) {
+          return new OriginalDate(arg);
+        }
+        return mockNow;
+      });
+      const expected = [2014, 2015, 2016, 2017, 2018];
+      expect(wrapper.vm.createYears()).toEqual(expected);
+    });
+  });
 
   describe("fetchAnimeList", () => {});
 
