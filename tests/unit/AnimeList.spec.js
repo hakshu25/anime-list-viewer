@@ -10,7 +10,13 @@ describe("AnimeList.vue", () => {
     expect(wrapper.isVueInstance()).toBeTruthy();
   });
 
-  describe("mounted", () => {});
+  describe("mounted", () => {
+    it('fetchAnimeListが呼ばれること', () => {
+      const spy = jest.spyOn(wrapper.vm, 'fetchAnimeList');
+      wrapper.vm.displayAnimeList();
+      expect(spy).toHaveBeenCalledWith('2014', '2');
+    });
+  });
 
   describe("createYears", () => {
     it("2014年から今年度までの年度を取得できること", () => {
@@ -36,7 +42,7 @@ describe("AnimeList.vue", () => {
       wrapper.find({ ref: 'cour' }).setValue('4');
       const spy = jest.spyOn(wrapper.vm, 'fetchAnimeList');
       wrapper.vm.displayAnimeList();
-      expect(spy).toHaveBeenCalledWith('2015','4');
+      expect(spy).toHaveBeenCalledWith('2015', '4');
     });
   });
 });
