@@ -3,7 +3,7 @@ import AnimeList from "../../src/components/AnimeList.vue";
 
 describe("AnimeList.vue", () => {
   const wrapper = shallowMount(AnimeList, {
-    stubs: ["v-client-table"]
+    stubs: ["v-client-table"],
   });
 
   it("renders component", () => {
@@ -47,5 +47,13 @@ describe("AnimeList.vue", () => {
 
   describe("fetchAnimeList", () => {});
 
-  describe("displayAnimeList", () => {});
+  describe("displayAnimeList", () => {
+    it('fetchAnimeListが呼ばれること', () => {
+      wrapper.find({ ref: 'year' }).setValue('2015');
+      wrapper.find({ ref: 'cour' }).setValue('4');
+      const spy = jest.spyOn(wrapper.vm, 'fetchAnimeList');
+      wrapper.vm.displayAnimeList();
+      expect(spy).toHaveBeenCalledWith('2015','4');
+    });
+  });
 });

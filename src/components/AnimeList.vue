@@ -1,6 +1,6 @@
 <template>
   <div class="anime">
-    <select id="year">
+    <select ref="year">
       <option
         v-for="year in years"
         :key="year"
@@ -9,7 +9,7 @@
         {{ year }}
       </option>
     </select>
-    <select id="cour">
+    <select ref="cour">
       <option value="2">
         春アニメ
       </option>
@@ -29,10 +29,10 @@
     >
       表示
     </button>
-    <v-client-table
+    <!-- <v-client-table
       :data="rows"
       :columns="columns"
-    />
+    /> -->
   </div>
 </template>
 
@@ -41,15 +41,14 @@ import axios from "axios";
 
 export default {
   name: "AnimeList",
-  data: () => {
+  data: function () {
     return {
       columns: ["title"],
       rows: [],
-      years: []
+      years: this.createYears()
     };
   },
   mounted() {
-    this.years = this.createYears();
     // 春アニメ
     const cour = 2;
     this.fetchAnimeList(this.years[0], cour);
@@ -88,9 +87,9 @@ export default {
         });
     },
     displayAnimeList: function() {
-      const year = document.getElementById("year").value;
-      const cour = document.getElementById("cour").value;
-      this.fetchAnimeList(year, cour);
+      // const year = document.getElementById("year").value;
+      // const cour = document.getElementById("cour").value;
+      this.fetchAnimeList(this.$refs.year.value, this.$refs.cour.value);
     }
   }
 };
