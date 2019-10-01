@@ -53,19 +53,25 @@ export default {
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
-    const cour = this.getCourInfo(month);
+    const cour = this.getCour(month);
     this.fetchAnimeList(year, cour);
   },
   methods: {
-    getCourInfo: month => {
-      const cours = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]];
-      let index = cours.findIndex(v => {
-        return v[0] <= month && month <= v[2];
-      });
-      return ++index;
+    getCour: month => {
+      const coursMap = {
+        1: [4, 5, 6],
+        2: [7, 8, 9],
+        3: [10, 11, 12],
+        4: [1, 2, 3]
+      };
+      for (let courStr of Object.keys(coursMap)) {
+        if (coursMap[courStr].includes(month)) {
+          return parseInt(courStr, 10);
+        }
+      }
     },
     createYears: () => {
-      const minDate = new Date('2014');
+      const minDate = new Date("2014");
       const firstYear = minDate.getFullYear();
       const maxDate = new Date();
       const through = maxDate.getFullYear() + 1 - firstYear;
@@ -81,12 +87,14 @@ export default {
         .then(res => {
           this.rows = res.data;
         })
-        .catch(e => { throw new Error(e)});
+        .catch(e => {
+          throw new Error(e);
+        });
     },
-    displayAnimeList: function () {
-        const year = document.getElementById('year').value;
-        const cour = document.getElementById('cour').value;
-        this.fetchAnimeList(year, cour);
+    displayAnimeList: function() {
+      const year = document.getElementById("year").value;
+      const cour = document.getElementById("cour").value;
+      this.fetchAnimeList(year, cour);
     }
   }
 };
