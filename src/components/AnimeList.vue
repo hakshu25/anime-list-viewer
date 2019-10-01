@@ -10,16 +10,16 @@
       </option>
     </select>
     <select id="cour">
-      <option value="1">
+      <option value="2">
         春アニメ
       </option>
-      <option value="2">
+      <option value="3">
         夏アニメ
       </option>
-      <option value="3">
+      <option value="4">
         秋アニメ
       </option>
-      <option value="4">
+      <option value="1">
         冬アニメ
       </option>
     </select>
@@ -50,11 +50,9 @@ export default {
   },
   mounted() {
     this.years = this.createYears();
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const cour = this.getCour(month);
-    this.fetchAnimeList(year, cour);
+    // 春アニメ
+    const cour = 2;
+    this.fetchAnimeList(this.years[0], cour);
   },
   methods: {
     getCour: month => {
@@ -62,7 +60,7 @@ export default {
         1: [4, 5, 6],
         2: [7, 8, 9],
         3: [10, 11, 12],
-        4: [1, 2, 3]
+        4: [1, 2, 3],
       };
       for (let courStr of Object.keys(coursMap)) {
         if (coursMap[courStr].includes(month)) {
