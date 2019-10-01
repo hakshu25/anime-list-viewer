@@ -54,19 +54,6 @@ export default {
     this.fetchAnimeList(this.years[0], cour);
   },
   methods: {
-    getCour: month => {
-      const coursMap = {
-        1: [4, 5, 6],
-        2: [7, 8, 9],
-        3: [10, 11, 12],
-        4: [1, 2, 3],
-      };
-      for (let courStr of Object.keys(coursMap)) {
-        if (coursMap[courStr].includes(month)) {
-          return parseInt(courStr, 10);
-        }
-      }
-    },
     createYears: () => {
       const firstYear = new Date("2014").getFullYear();
       const maxYear = new Date().getFullYear();
@@ -87,8 +74,6 @@ export default {
         });
     },
     displayAnimeList: function() {
-      // const year = document.getElementById("year").value;
-      // const cour = document.getElementById("cour").value;
       this.fetchAnimeList(this.$refs.year.value, this.$refs.cour.value);
     }
   }
