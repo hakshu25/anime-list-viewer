@@ -1,16 +1,38 @@
 <template>
   <div class="anime">
     <select ref="year">
-      <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
+      <option
+        v-for="year in years"
+        :key="year"
+        :value="year"
+      >
+        {{ year }}
+      </option>
     </select>
     <select ref="cour">
-      <option value="2">春アニメ</option>
-      <option value="3">夏アニメ</option>
-      <option value="4">秋アニメ</option>
-      <option value="1">冬アニメ</option>
+      <option value="2">
+        春アニメ
+      </option>
+      <option value="3">
+        夏アニメ
+      </option>
+      <option value="4">
+        秋アニメ
+      </option>
+      <option value="1">
+        冬アニメ
+      </option>
     </select>
-    <button type="button" @click="displayAnimeList">表示</button>
-    <v-client-table :data="rows" :columns="columns" />
+    <button
+      type="button"
+      @click="displayAnimeList"
+    >
+      表示
+    </button>
+    <v-client-table
+      :data="rows"
+      :columns="columns"
+    />
   </div>
 </template>
 
