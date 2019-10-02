@@ -16,7 +16,7 @@ describe("AnimeList.vue", () => {
   });
 
   describe("mounted", () => {
-    it("fetchAnimeListが呼ばれること", () => {
+    it("fetchAnimeList method is called", () => {
       const spy = jest.spyOn(wrapper.vm, "fetchAnimeList");
       wrapper.vm.displayAnimeList();
       expect(spy).toHaveBeenCalledWith("2014", "2");
@@ -24,7 +24,7 @@ describe("AnimeList.vue", () => {
   });
 
   describe("createYears", () => {
-    it("2014年から今年度までの年度を取得できること", () => {
+    it("get years from 2014 to current year", () => {
       const OriginalDate = Date;
       const mockNow = new Date("2018/8/1 12:00:00");
 
@@ -56,7 +56,7 @@ describe("AnimeList.vue", () => {
   });
 
   describe("displayAnimeList", () => {
-    it("fetchAnimeListが呼ばれること", () => {
+    it("fetchAnimeList method is called", () => {
       wrapper.find({ ref: "year" }).setValue("2015");
       wrapper.find({ ref: "cour" }).setValue("4");
       const spy = jest.spyOn(wrapper.vm, "fetchAnimeList");
