@@ -1,6 +1,6 @@
 <template>
   <div class="anime">
-    <select id="year">
+    <select ref="year">
       <option
         v-for="year in years"
         :key="year"
@@ -9,17 +9,17 @@
         {{ year }}
       </option>
     </select>
-    <select id="cour">
-      <option value="1">
+    <select ref="cour">
+      <option value="2">
         春アニメ
       </option>
-      <option value="2">
+      <option value="3">
         夏アニメ
       </option>
-      <option value="3">
+      <option value="4">
         秋アニメ
       </option>
-      <option value="4">
+      <option value="1">
         冬アニメ
       </option>
     </select>
@@ -41,52 +41,40 @@ import axios from "axios";
 
 export default {
   name: "AnimeList",
-  data: () => {
+  data: function() {
     return {
       columns: ["title"],
       rows: [],
-      years: []
+      years: this.createYears()
     };
   },
   mounted() {
-    this.years = this.createYears();
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const cour = this.getCourInfo(month);
-    this.fetchAnimeList(year, cour);
+    // 春アニメ
+    const cour = 2;
+    this.fetchAnimeList(this.years[0], cour);
   },
   methods: {
-    getCourInfo: month => {
-      const cours = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]];
-      let index = cours.findIndex(v => {
-        return v[0] <= month && month <= v[2];
-      });
-      return ++index;
-    },
     createYears: () => {
-      const minDate = new Date('2014');
-      const firstYear = minDate.getFullYear();
-      const maxDate = new Date();
-      const through = maxDate.getFullYear() + 1 - firstYear;
+      const firstYear = new Date("2014").getFullYear();
+      const maxYear = new Date().getFullYear();
       const years = [];
-      for (let i = firstYear, length = firstYear + through; i < length; i++) {
-        years.push(i);
+      for (let currentYear = firstYear; currentYear <= maxYear; currentYear++) {
+        years.push(currentYear);
       }
       return years;
     },
     fetchAnimeList: function(year, cour) {
-      axios
+      return axios
         .get(`http://api.moemoe.tokyo/anime/v1/master/${year}/${cour}`)
         .then(res => {
           this.rows = res.data;
         })
-        .catch(e => { throw new Error(e)});
+        .catch(e => {
+          throw new Error(e);
+        });
     },
-    displayAnimeList: function () {
-        const year = document.getElementById('year').value;
-        const cour = document.getElementById('cour').value;
-        this.fetchAnimeList(year, cour);
+    displayAnimeList: function() {
+      this.fetchAnimeList(this.$refs.year.value, this.$refs.cour.value);
     }
   }
 };
