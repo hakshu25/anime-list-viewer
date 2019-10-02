@@ -41,8 +41,6 @@ describe("AnimeList.vue", () => {
 
   describe("fetchAnimeList", () => {
     it("fetch data when success", () => {
-      const resp = { data: [{ title: "aaa" }, { title: "bbb" }] };
-      axios.get.mockResolvedValue(resp);
       wrapper.vm.fetchAnimeList("2014", "2");
       expect(wrapper.vm.rows).toEqual(resp.data);
     });
