@@ -1,14 +1,21 @@
 import { shallowMount } from "@vue/test-utils";
 import AnimeList from "../../src/components/AnimeList.vue";
+import AnimeService from '../../src/services/anime-service';
 import axios from "axios";
 
 jest.mock("axios");
+jest.mock('../../src/services/anime-service');
 
 describe("AnimeList.vue", () => {
   const resp = { data: [{ title: "aaa" }, { title: "bbb" }] };
-  axios.get.mockResolvedValue(resp);
-  const wrapper = shallowMount(AnimeList, {
-    stubs: ["v-client-table"]
+  let wrapper;
+
+  beforeEach(() => {
+    axios.get.mockResolvedValue(resp);
+    AnimeService.mockClear();
+    wrapper = shallowMount(AnimeList, {
+      stubs: ["v-client-table"]
+    });
   });
 
   it("renders component", () => {
@@ -16,10 +23,10 @@ describe("AnimeList.vue", () => {
   });
 
   describe("mounted", () => {
-    it("fetchAnimeList method is called", () => {
-      const spy = jest.spyOn(wrapper.vm, "fetchAnimeList");
+    it("displayAnimeList method is called", () => {
+      const spy = jest.spyOn(wrapper.vm, "displayAnimeList");
       wrapper.vm.displayAnimeList();
-      expect(spy).toHaveBeenCalledWith("2014", "2");
+      expect(spy).toHaveBeenCalled();
     });
   });
 
@@ -40,26 +47,29 @@ describe("AnimeList.vue", () => {
   });
 
   describe("fetchAnimeList", () => {
-    it("fetch data when success", () => {
-      wrapper.vm.fetchAnimeList("2014", "2");
-      expect(wrapper.vm.rows).toEqual(resp.data);
+    it("fetch data when success", async () => {
+      await wrapper.vm.fetchAnimeList("2016", "3");
+      expect(wrapper.vm.list).toEqual(resp.data);
     });
 
     it("throw error when catch error", async () => {
       axios.get.mockRejectedValue("error message");
-      await expect(wrapper.vm.fetchAnimeList("2014", "2")).rejects.toEqual(
+      await expect(wrapper.vm.fetchAnimeList("2015", "1")).rejects.toEqual(
         new Error("error message")
       );
     });
   });
 
   describe("displayAnimeList", () => {
-    it("fetchAnimeList method is called", () => {
-      wrapper.find({ ref: "year" }).setValue("2015");
-      wrapper.find({ ref: "cour" }).setValue("4");
-      const spy = jest.spyOn(wrapper.vm, "fetchAnimeList");
+    it("getList method of AnimeService is called", () => {
+      const spy = AnimeService.mock.instances[0].getList.mockImplementation(() => resp.data);
+
+      wrapper.vm.selectedYear = '2015'
+      wrapper.vm.cour = '4'
       wrapper.vm.displayAnimeList();
-      expect(spy).toHaveBeenCalledWith("2015", "4");
+
+      expect(spy).toHaveBeenLastCalledWith("2015", "4");
+      expect(wrapper.vm.list).toEqual(resp.data);
     });
   });
 });

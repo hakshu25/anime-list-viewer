@@ -1,6 +1,8 @@
 <template>
   <div class="anime">
-    <select ref="year">
+    <select
+      v-model="selectedYear"
+    >
       <option
         v-for="year in years"
         :key="year"
@@ -9,7 +11,7 @@
         {{ year }}
       </option>
     </select>
-    <select ref="cour">
+    <select v-model="cour">
       <option value="2">
         春アニメ
       </option>
@@ -30,7 +32,7 @@
       表示
     </button>
     <v-client-table
-      :data="rows"
+      :data="list"
       :columns="columns"
     />
   </div>
@@ -38,20 +40,22 @@
 
 <script>
 import axios from "axios";
+import AnimeService from '../services/anime-service.js'
 
 export default {
   name: "AnimeList",
   data: function() {
     return {
       columns: ["title"],
-      rows: [],
-      years: this.createYears()
+      list: [],
+      years: this.createYears(),
+      service: new AnimeService(),
+      selectedYear: '2014',
+      cour: '2',
     };
   },
   mounted() {
-    // 春アニメ
-    const cour = 2;
-    this.fetchAnimeList(this.years[0], cour);
+    this.displayAnimeList();
   },
   methods: {
     createYears: () => {
@@ -67,14 +71,14 @@ export default {
       return axios
         .get(`http://api.moemoe.tokyo/anime/v1/master/${year}/${cour}`)
         .then(res => {
-          this.rows = res.data;
+          this.list = res.data;
         })
         .catch(e => {
           throw new Error(e);
         });
     },
     displayAnimeList: function() {
-      this.fetchAnimeList(this.$refs.year.value, this.$refs.cour.value);
+      this.list = this.service.getList(this.selectedYear, this.cour);
     }
   }
 };
