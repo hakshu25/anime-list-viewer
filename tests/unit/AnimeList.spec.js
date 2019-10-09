@@ -1,10 +1,10 @@
 import { shallowMount } from "@vue/test-utils";
 import AnimeList from "../../src/components/AnimeList.vue";
-import AnimeService from '../../src/services/anime-service';
+import AnimeUsecase from '../../src/usecases/anime-usecase';
 import axios from "axios";
 
 jest.mock("axios");
-jest.mock('../../src/services/anime-service');
+jest.mock('../../src/usecases/anime-usecase');
 
 describe("AnimeList.vue", () => {
   const resp = { data: [{ title: "aaa" }, { title: "bbb" }] };
@@ -12,7 +12,7 @@ describe("AnimeList.vue", () => {
 
   beforeEach(() => {
     axios.get.mockResolvedValue(resp);
-    AnimeService.mockClear();
+    AnimeUsecase.mockClear();
     wrapper = shallowMount(AnimeList, {
       stubs: ["v-client-table"]
     });
@@ -62,7 +62,7 @@ describe("AnimeList.vue", () => {
 
   describe("displayAnimeList", () => {
     it("getList method of AnimeService is called", () => {
-      const spy = AnimeService.mock.instances[0].getList.mockImplementation(() => resp.data);
+      const spy = AnimeUsecase.mock.instances[0].getList.mockImplementation(() => resp.data);
 
       wrapper.vm.selectedYear = '2015'
       wrapper.vm.cour = '4'

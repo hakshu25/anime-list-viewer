@@ -40,7 +40,7 @@
 
 <script>
 import axios from "axios";
-import AnimeService from '../services/anime-service.js'
+import AnimeUsecase from '../usecases/anime-usecase.js'
 
 export default {
   name: "AnimeList",
@@ -49,7 +49,7 @@ export default {
       columns: ["title"],
       list: [],
       years: this.createYears(),
-      service: new AnimeService(),
+      usecase: new AnimeUsecase(),
       selectedYear: '2014',
       cour: '2',
     };
@@ -78,7 +78,7 @@ export default {
         });
     },
     displayAnimeList: function() {
-      this.list = this.service.getList(this.selectedYear, this.cour);
+      this.list = this.usecase.getList(this.selectedYear, this.cour);
     }
   }
 };
