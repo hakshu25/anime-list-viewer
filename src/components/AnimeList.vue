@@ -1,8 +1,6 @@
 <template>
   <div class="anime">
-    <select
-      v-model="selectedYear"
-    >
+    <select v-model="selectedYear">
       <option
         v-for="year in years"
         :key="year"
@@ -31,48 +29,50 @@
     >
       表示
     </button>
-    <v-client-table
-      :data="list"
-      :columns="columns"
-    />
+    <div>
+      <p
+        v-for="l in list"
+        :key="l.id"
+      >
+        {{ l.title }}
+      </p>
+    </div>
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
 import AnimeUsecase from '../usecases/anime-usecase'
 import AnimeRepository from '../repositories/anime-repository';
+import { AnimeInfo } from '../models/anime-info-list';
 
-export default {
-  name: "AnimeList",
-  data: function() {
-    return {
-      columns: ["title"],
-      list: [],
-      years: this.createYears(),
-      usecase: new AnimeUsecase(new AnimeRepository()),
-      selectedYear: '2014',
-      cour: '2',
-    };
-  },
+@Component
+export default class AnimeList extends Vue {
+  columns: string[] = ["title"];
+  list: AnimeInfo[] = [];
+  years: number[] = this.createYears();
+  usecase: AnimeUsecase = new AnimeUsecase(new AnimeRepository());
+  selectedYear: string = '2014';
+  cour: string = '2';
+
   mounted() {
     this.displayAnimeList();
-  },
-  methods: {
-    createYears: () => {
-      const firstYear = new Date("2014").getFullYear();
-      const maxYear = new Date().getFullYear();
-      const years = [];
-      for (let currentYear = firstYear; currentYear <= maxYear; currentYear++) {
-        years.push(currentYear);
-      }
-      return years;
-    },
-    displayAnimeList: async function() {
-      this.list = await this.usecase.getList(this.selectedYear, this.cour);
-    }
   }
-};
+
+  createYears(): number[] {
+    const firstYear = new Date("2014").getFullYear();
+    const maxYear = new Date().getFullYear();
+    const years = [];
+    for (let currentYear = firstYear; currentYear <= maxYear; currentYear++) {
+      years.push(currentYear);
+    }
+    return years;
+  }
+
+  async displayAnimeList() {
+    this.list = await this.usecase.getList(this.selectedYear, this.cour);
+  }
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
