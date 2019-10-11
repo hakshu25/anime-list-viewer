@@ -1,14 +1,18 @@
 module.exports = {
   moduleFileExtensions: [
+    'js',
     'ts',
-    'tsx'
+    'tsx',
+    'vue'
   ],
   transform: {
-    '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.tsx?$': 'ts-jest',
+    '.*\\.(vue)$': 'vue-jest'
   },
   globals: {
     'ts-jest': {
       babelConfig: true
     }
-  }
+  },
+  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$"
 }
