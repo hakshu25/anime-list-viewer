@@ -4,20 +4,21 @@
   </div>
 </template>
 
-<script>
-import AnimeList from "./components/AnimeList.vue";
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import AnimeList from './components/AnimeList.vue'
 
-export default {
-  name: "App",
+@Component({
   components: {
-    AnimeList
+    AnimeList,
   },
-};
+})
+export default class App extends Vue {}
 </script>
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

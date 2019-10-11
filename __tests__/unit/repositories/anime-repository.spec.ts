@@ -4,7 +4,7 @@ import axios from 'axios';
 jest.mock("axios");
 
 describe('AnimeRepository', () => {
-  let repository;
+  let repository: AnimeRepository;
 
   beforeEach(() => {
     repository = new AnimeRepository();
@@ -13,7 +13,7 @@ describe('AnimeRepository', () => {
   describe('saveList()', () => {
     it('save anime list', async () => {
       const list = { data: [{ title: 'Anime1'}, { title: 'Anime2' }]};
-      axios.get.mockResolvedValue(list);
+      (axios.get as any).mockResolvedValue(list);
 
       await repository.saveList('2019', '3');
 
