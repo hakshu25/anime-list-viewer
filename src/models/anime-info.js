@@ -1,1 +1,3 @@
-export class AnimeInfo {}
+export default class AnimeInfo {
+  constructor() {}
+}

@@ -61,7 +61,7 @@ describe("AnimeList.vue", () => {
   });
 
   describe("displayAnimeList", () => {
-    it("getList method of AnimeService is called", () => {
+    it("getList method of AnimeUsecase is called", () => {
       const spy = AnimeUsecase.mock.instances[0].getList.mockImplementation(() => resp.data);
 
       wrapper.vm.selectedYear = '2015'
