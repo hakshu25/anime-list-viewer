@@ -1,7 +1,11 @@
 <template>
   <div class="anime">
     <select v-model="selectedYear">
-      <option v-for="year in years" :key="year" :value="year">
+      <option
+        v-for="year in years"
+        :key="year"
+        :value="year"
+      >
         {{ year }}
       </option>
     </select>
@@ -19,11 +23,19 @@
         冬アニメ
       </option>
     </select>
-    <button type="button" @click="displayAnimeList">
+    <button
+      type="button"
+      @click="displayAnimeList"
+    >
       表示
     </button>
     <div>
-      <p v-for="l in list" :key="l.id">{{ l.title }}</p>
+      <p
+        v-for="l in list"
+        :key="l.id"
+      >
+        {{ l.title }}
+      </p>
     </div>
   </div>
 </template>

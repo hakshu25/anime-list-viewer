@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <AnimeList></AnimeList>
+    <AnimeList />
   </div>
 </template>
 
