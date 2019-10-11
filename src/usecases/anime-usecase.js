@@ -3,8 +3,8 @@ export default class AnimeUsecase {
     this.repository = repository;
   }
 
-  getList(year, cour) {
-    this.repository.saveList(year, cour);
+  async getList(year, cour) {
+    await this.repository.saveList(year, cour);
     return this.repository.list;
   }
 }

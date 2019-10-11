@@ -6,12 +6,12 @@ describe('AnimeUsecase', () => {
   const usecase = new AnimeUsecase(repository);
 
   describe('getList()', () => {
-    it('get anime list from repository', () => {
+    it('get anime list from repository', async () => {
       const expected = [{ title: 'TEST' }];
       const list = jest.spyOn(repository, 'list', 'get').mockReturnValue(expected);
       const saveList = jest.spyOn(repository, 'saveList');
 
-      const actual = usecase.getList('2019', '3');
+      const actual = await usecase.getList('2019', '3');
 
       expect(actual).toEqual(expected);
       expect(saveList).toHaveBeenCalledWith('2019', '3');

@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import axios from "axios";
-import AnimeUsecase from '../usecases/anime-usecase.js'
+import AnimeUsecase from '../usecases/anime-usecase'
+import AnimeRepository from '../repositories/anime-repository';
 
 export default {
   name: "AnimeList",
@@ -49,7 +49,7 @@ export default {
       columns: ["title"],
       list: [],
       years: this.createYears(),
-      usecase: new AnimeUsecase(),
+      usecase: new AnimeUsecase(new AnimeRepository()),
       selectedYear: '2014',
       cour: '2',
     };
@@ -67,18 +67,8 @@ export default {
       }
       return years;
     },
-    fetchAnimeList: function(year, cour) {
-      return axios
-        .get(`http://api.moemoe.tokyo/anime/v1/master/${year}/${cour}`)
-        .then(res => {
-          this.list = res.data;
-        })
-        .catch(e => {
-          throw new Error(e);
-        });
-    },
-    displayAnimeList: function() {
-      this.list = this.usecase.getList(this.selectedYear, this.cour);
+    displayAnimeList: async function() {
+      this.list = await this.usecase.getList(this.selectedYear, this.cour);
     }
   }
 };
