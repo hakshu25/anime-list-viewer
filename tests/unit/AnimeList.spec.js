@@ -1,14 +1,17 @@
 import { shallowMount } from "@vue/test-utils";
 import AnimeList from "../../src/components/AnimeList.vue";
-import axios from "axios";
+import AnimeUsecase from '../../src/usecases/anime-usecase';
 
-jest.mock("axios");
+jest.mock('../../src/usecases/anime-usecase');
 
 describe("AnimeList.vue", () => {
-  const resp = { data: [{ title: "aaa" }, { title: "bbb" }] };
-  axios.get.mockResolvedValue(resp);
-  const wrapper = shallowMount(AnimeList, {
-    stubs: ["v-client-table"]
+  let wrapper;
+
+  beforeEach(() => {
+    AnimeUsecase.mockClear();
+    wrapper = shallowMount(AnimeList, {
+      stubs: ["v-client-table"]
+    });
   });
 
   it("renders component", () => {
@@ -16,10 +19,10 @@ describe("AnimeList.vue", () => {
   });
 
   describe("mounted", () => {
-    it("fetchAnimeList method is called", () => {
-      const spy = jest.spyOn(wrapper.vm, "fetchAnimeList");
+    it("displayAnimeList method is called", () => {
+      const spy = jest.spyOn(wrapper.vm, "displayAnimeList");
       wrapper.vm.displayAnimeList();
-      expect(spy).toHaveBeenCalledWith("2014", "2");
+      expect(spy).toHaveBeenCalled();
     });
   });
 
@@ -39,27 +42,17 @@ describe("AnimeList.vue", () => {
     });
   });
 
-  describe("fetchAnimeList", () => {
-    it("fetch data when success", () => {
-      wrapper.vm.fetchAnimeList("2014", "2");
-      expect(wrapper.vm.rows).toEqual(resp.data);
-    });
-
-    it("throw error when catch error", async () => {
-      axios.get.mockRejectedValue("error message");
-      await expect(wrapper.vm.fetchAnimeList("2014", "2")).rejects.toEqual(
-        new Error("error message")
-      );
-    });
-  });
-
   describe("displayAnimeList", () => {
-    it("fetchAnimeList method is called", () => {
-      wrapper.find({ ref: "year" }).setValue("2015");
-      wrapper.find({ ref: "cour" }).setValue("4");
-      const spy = jest.spyOn(wrapper.vm, "fetchAnimeList");
-      wrapper.vm.displayAnimeList();
-      expect(spy).toHaveBeenCalledWith("2015", "4");
+    it("getList method of AnimeUsecase is called", async () => {
+      const resp = { data: [{ title: "aaa" }, { title: "bbb" }] };
+      const spy = AnimeUsecase.mock.instances[0].getList.mockImplementation(() => resp.data);
+
+      wrapper.vm.selectedYear = '2015'
+      wrapper.vm.cour = '4'
+      await wrapper.vm.displayAnimeList();
+
+      expect(spy).toHaveBeenLastCalledWith("2015", "4");
+      expect(wrapper.vm.list).toEqual(resp.data);
     });
   });
 });
