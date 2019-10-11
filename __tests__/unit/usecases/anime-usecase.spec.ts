@@ -7,7 +7,7 @@ describe('AnimeUsecase', () => {
 
   describe('getList()', () => {
     it('get anime list from repository', async () => {
-      const expected = [{ title: 'TEST' }];
+      const expected: any = [{ title: 'TEST' }];
       const list = jest.spyOn(repository, 'list', 'get').mockReturnValue(expected);
       const saveList = jest.spyOn(repository, 'saveList');
 

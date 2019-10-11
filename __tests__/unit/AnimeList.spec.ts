@@ -1,14 +1,14 @@
-import { shallowMount } from "@vue/test-utils";
-import AnimeList from "../../src/components/AnimeList.vue";
+import { shallowMount, Wrapper } from "@vue/test-utils";
+import AnimeList from '../../src/components/AnimeList.vue';
 import AnimeUsecase from '../../src/usecases/anime-usecase';
 
 jest.mock('../../src/usecases/anime-usecase');
 
 describe("AnimeList.vue", () => {
-  let wrapper;
+  let wrapper: Wrapper<any>;
 
   beforeEach(() => {
-    AnimeUsecase.mockClear();
+    (<jest.Mock>AnimeUsecase).mockClear();
     wrapper = shallowMount(AnimeList, {
       stubs: ["v-client-table"]
     });
@@ -31,12 +31,12 @@ describe("AnimeList.vue", () => {
       const OriginalDate = Date;
       const mockNow = new Date("2018/8/1 12:00:00");
 
-      jest.spyOn(global, "Date").mockImplementation(arg => {
-        if (arg) {
-          return new OriginalDate(arg);
+      (global as any).Date = class extends OriginalDate {
+        constructor(arg: string | undefined) {
+          super();
+          return arg ? new OriginalDate(arg) : mockNow;
         }
-        return mockNow;
-      });
+      }
       const expected = [2014, 2015, 2016, 2017, 2018];
       expect(wrapper.vm.createYears()).toEqual(expected);
     });
@@ -45,7 +45,7 @@ describe("AnimeList.vue", () => {
   describe("displayAnimeList", () => {
     it("getList method of AnimeUsecase is called", async () => {
       const resp = { data: [{ title: "aaa" }, { title: "bbb" }] };
-      const spy = AnimeUsecase.mock.instances[0].getList.mockImplementation(() => resp.data);
+      const spy = (<jest.Mock>AnimeUsecase).mock.instances[0].getList.mockImplementation(() => resp.data);
 
       wrapper.vm.selectedYear = '2015'
       wrapper.vm.cour = '4'
