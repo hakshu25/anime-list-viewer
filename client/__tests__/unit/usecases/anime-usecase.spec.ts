@@ -1,5 +1,5 @@
-import AnimeUsecase from "../../../src/usecases/anime-usecase";
-import AnimeRepository from '../../../src/repositories/anime-repository';
+import AnimeUsecase from "../../../../src/usecases/anime-usecase";
+import AnimeRepository from '../../../../src/repositories/anime-repository';
 
 describe('AnimeUsecase', () => {
   const repository = new AnimeRepository();
