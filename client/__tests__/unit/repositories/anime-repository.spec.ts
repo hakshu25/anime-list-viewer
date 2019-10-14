@@ -1,4 +1,4 @@
-import AnimeRepository from "../../../src/repositories/anime-repository";
+import AnimeRepository from "../../../../src/repositories/anime-repository";
 import axios from 'axios';
 
 jest.mock("axios");
