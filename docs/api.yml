@@ -1,0 +1,55 @@
+swagger: "2.0"
+info:
+  description: "This is an anime info api server."
+  version: "1.0.0"
+  title: "Swagger AnimeInfo"
+  termsOfService: "http://swagger.io/terms/"
+basePath: "/api"
+tags:
+- name: "anime"
+  description: "Anime Info"
+schemes:
+- "http"
+paths:
+  /anime_lists/{year}/{cour}:
+    get:
+      tags:
+      - "anime"
+      summary: "Get Anime Info"
+      description: ""
+      operationId: "GetAnimelists"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "year"
+        in: "path"
+        description: "Broadcast year"
+        required: true
+        type: "string"
+      - name: "cour"
+        in: "path"
+        description: "Broadcast cour"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AnimeList"
+        400:
+          description: "Missing Parameters"
+        404:
+          description: "Not Found"
+definitions:
+  AnimeList:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      title:
+        type: "string"
+      link:
+        type: "string"
