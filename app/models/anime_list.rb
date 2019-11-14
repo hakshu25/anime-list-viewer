@@ -18,7 +18,7 @@ class AnimeList
   end
 
   def all
-    Syobocal::JSON::TitleMedium.get(build_params)
+    Syobocal::JSON::TitleMedium.get(build_params)['Titles'].values
   end
 
   private

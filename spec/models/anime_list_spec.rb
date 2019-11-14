@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe AnimeList, type: :model do
   describe 'all' do
     before do
-      allow(Syobocal::JSON::TitleMedium).to receive(:get)
+      allow(Syobocal::JSON::TitleMedium)
+        .to receive(:get).and_return('Titles' => {})
     end
 
     it 'call syobocal get method' do
