@@ -42,4 +42,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # For anime info
-gem 'syobocal', '~> 0.9.1'
+gem 'syobocal', '~> 0.10.0'
