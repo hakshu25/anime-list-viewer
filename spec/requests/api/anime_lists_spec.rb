@@ -27,4 +27,5 @@ RSpec.describe 'AnimeLists', type: :request do
         }]
       end
     end
+  end
 end
