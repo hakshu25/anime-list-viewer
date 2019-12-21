@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe AnimeList, type: :model do
-  describe 'all' do
+  describe 'term' do
     before do
       allow(Syobocal::JSON::TitleMedium)
         .to receive(:get).and_return('Titles' => {})
@@ -12,8 +14,7 @@ RSpec.describe AnimeList, type: :model do
       cour = '1'
       params = { 'Start' => '2019-01-01', 'Days' => 120 }
 
-      anime_list = described_class.new(year, cour)
-      anime_list.all
+      described_class.term(year, cour)
 
       expect(Syobocal::JSON::TitleMedium).to have_received(:get).with(params)
     end

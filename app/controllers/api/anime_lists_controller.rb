@@ -3,7 +3,7 @@
 module Api
   class AnimeListsController < ApplicationController
     def show
-      @lists = AnimeList.new(params[:year], params[:cour]).all
+      @lists = AnimeList.term(params[:year], params[:cour])
     end
   end
 end

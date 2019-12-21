@@ -5,25 +5,22 @@ require 'syobocal'
 class AnimeList
   include ActiveModel::Model
 
-  COUR_MAP = {
-    '1' => '01-01',
-    '2' => '04-01',
-    '3' => '07-01',
-    '4' => '10-01'
-  }.freeze
+  class << self
+    COUR_MAP = {
+      '1' => '01-01',
+      '2' => '04-01',
+      '3' => '07-01',
+      '4' => '10-01'
+    }.freeze
 
-  def initialize(year, cour)
-    @year = year
-    @date = COUR_MAP[cour]
-  end
+    def term(year, cour)
+      Syobocal::JSON::TitleMedium.get(build_params(year, COUR_MAP[cour]))['Titles'].values
+    end
 
-  def all
-    Syobocal::JSON::TitleMedium.get(build_params)['Titles'].values
-  end
+    private
 
-  private
-
-  def build_params
-    { 'Start' => "#{@year}-#{@date}", 'Days' => 120 }
+    def build_params(year, start_date)
+      { 'Start' => "#{year}-#{start_date}", 'Days' => 120 }
+    end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'AnimeLists', type: :request do
@@ -8,7 +10,7 @@ RSpec.describe 'AnimeLists', type: :request do
         'Title' => 'anime',
         'Links' => [['http://hoge.com', 'オフィシャルサイト']]
       }]
-      allow_any_instance_of(AnimeList).to receive(:all).and_return(data)
+      allow(AnimeList).to receive(:term).and_return(data)
       get '/api/anime_lists/2019/1'
     end
 
