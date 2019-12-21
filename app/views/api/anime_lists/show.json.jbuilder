@@ -4,5 +4,5 @@ json.array! @lists do |list|
   puts list
   json.id list['TID'].to_i
   json.title list['Title']
-  json.link list['Links']&.first&.first
+  json.link link(list)
 end

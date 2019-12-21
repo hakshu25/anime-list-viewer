@@ -2,6 +2,8 @@
 
 module Api
   class AnimeListsController < ApplicationController
+    helper ::AnimeListHelper
+
     def show
       @lists = AnimeList.term(params[:year], params[:cour])
     end
