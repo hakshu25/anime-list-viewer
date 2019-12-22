@@ -23,7 +23,7 @@ export default class AnimeRepository {
 
   private async fetchAnimeList(year: string, cour: string): Promise<AnimeInfo[]> {
     return axios
-        .get(`http://api.moemoe.tokyo/anime/v1/master/${year}/${cour}`)
+        .get(`http://localhost:3000/api/anime_lists/${year}/${cour}`)
         .then(res => {
           return res.data;
         })
