@@ -1,6 +1,6 @@
 import { shallowMount, Wrapper } from "@vue/test-utils";
 import AnimeList from '../../src/components/AnimeList.vue';
-import AnimeUsecase from '../../../src/usecases/anime-usecase';
+import AnimeUsecase from '../../src/usecases/anime-usecase';
 
 jest.mock('../../src/usecases/anime-usecase');
 
