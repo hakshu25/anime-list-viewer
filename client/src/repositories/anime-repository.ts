@@ -9,7 +9,11 @@ export default class AnimeRepository {
   }
 
   get list() {
-    return this.animeList!.all;
+    if (!this.animeList) {
+      return [];
+    }
+
+    return this.animeList.all;
   }
 
   async saveList(year: string, cour: string) {

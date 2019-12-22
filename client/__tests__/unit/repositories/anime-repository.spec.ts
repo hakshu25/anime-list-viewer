@@ -20,4 +20,12 @@ describe('AnimeRepository', () => {
       expect(repository.list).toEqual(list.data);
     });
   });
+
+  describe('list', () => {
+    describe('If there is not list', () => {
+      it('return empty list', () => {
+        expect(repository.list).toEqual([]);
+      });
+    });
+  });
 });
