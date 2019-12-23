@@ -10,6 +10,9 @@
       </option>
     </select>
     <select v-model="cour">
+      <option value="1">
+        冬アニメ
+      </option>
       <option value="2">
         春アニメ
       </option>
@@ -18,9 +21,6 @@
       </option>
       <option value="4">
         秋アニメ
-      </option>
-      <option value="1">
-        冬アニメ
       </option>
     </select>
     <button
@@ -35,6 +35,7 @@
         :key="l.id"
       >
         {{ l.title }}
+        <a v-if="l.link" v-bind:href="l.link" target="blank">公式サイト</a>
       </p>
     </div>
   </div>
