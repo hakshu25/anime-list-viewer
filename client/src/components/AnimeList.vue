@@ -35,6 +35,7 @@
         :key="l.id"
       >
         {{ l.title }}
+        <a v-if="l.link" v-bind:href="l.link" target="blank">公式サイト</a>
       </p>
     </div>
   </div>
