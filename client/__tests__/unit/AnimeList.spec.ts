@@ -1,6 +1,6 @@
 import { shallowMount, Wrapper } from "@vue/test-utils";
 import AnimeList from '../../src/components/AnimeList.vue';
-import AnimeUsecase from '../../../src/usecases/anime-usecase';
+import AnimeUsecase from '../../src/usecases/anime-usecase';
 
 jest.mock('../../src/usecases/anime-usecase');
 
@@ -43,16 +43,27 @@ describe("AnimeList.vue", () => {
   });
 
   describe("displayAnimeList", () => {
-    it("getList method of AnimeUsecase is called", async () => {
-      const resp = { data: [{ title: "aaa" }, { title: "bbb" }] };
-      const spy = (<jest.Mock>AnimeUsecase).mock.instances[0].getList.mockImplementation(() => resp.data);
+    let spy: any;
+    const resp = { data: [{ title: "aaa", link: null }, { title: "bbb", link: 'http://example.com' }] };
+
+    beforeEach(async () => {
+      spy = (<jest.Mock>AnimeUsecase).mock.instances[0].getList.mockImplementation(() => resp.data);
 
       wrapper.vm.selectedYear = '2015'
       wrapper.vm.cour = '4'
-      await wrapper.vm.displayAnimeList();
 
+      await wrapper.vm.displayAnimeList();
+    });
+
+    it("getList method of AnimeUsecase is called", async () => {
       expect(spy).toHaveBeenLastCalledWith("2015", "4");
       expect(wrapper.vm.list).toEqual(resp.data);
+    });
+
+    it('show link if there is link url', async () => {
+      const links = wrapper.findAll('a');
+      expect(links.at(0).attributes().href).toBe('http://example.com');
+      expect(links.length).toBe(1);
     });
   });
 });
