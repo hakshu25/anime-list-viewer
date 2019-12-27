@@ -14,5 +14,6 @@ module.exports = {
       babelConfig: true
     }
   },
-  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$"
+  testRegex: "(/__tests__/unit|(\\.|/)(test|spec))\\.(tsx?)$",
+  setupTestFrameworkScriptFile: './__tests__/setup.ts'
 }
