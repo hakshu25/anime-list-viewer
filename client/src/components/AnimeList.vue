@@ -29,15 +29,37 @@
     >
       表示
     </button>
-    <div>
-      <p
-        v-for="l in list"
-        :key="l.id"
+    <v-container fluid>
+      <v-row
+        align="center"
+        justify="center"
       >
-        {{ l.title }}
-        <a v-if="l.link" v-bind:href="l.link" target="blank">公式サイト</a>
-      </p>
-    </div>
+        <v-col
+          v-for="(l, i) in list"
+          :key="i"
+          cols="4"
+          md="4"
+          sm="12"
+        >
+          <v-card
+            class="mx-auto"
+          >
+            <v-card-text>
+              <p class="display-1 text--primary">
+                {{ l.title }}
+              </p>
+            </v-card-text>
+            <v-card-actions>
+              <a
+                v-if="l.link"
+                :href="l.link"
+                target="blank"
+              >公式サイト</a>
+            </v-card-actions>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
   </div>
 </template>
 
