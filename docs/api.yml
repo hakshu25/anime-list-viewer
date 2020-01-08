@@ -42,6 +42,39 @@ paths:
           description: "Missing Parameters"
         404:
           description: "Not Found"
+  /anime_site_previews:
+    post:
+      tags:
+      - "anime"
+      summary: "Get Anime Site Preview"
+      description: ""
+      operationId: "GetAnimeSitePreview"
+      produces:
+      - "application/json"
+      consumes:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          schema:
+            type: object
+            properties:
+              link_url:
+                type: "string"
+                description: "anime site link url"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            type: "object"
+            properties:
+              previewImageUrl:
+                type: "string"
+                description: "site preview image url"
+        400:
+          description: "Missing Parameters"
+        404:
+          description: "Not Found"
 definitions:
   AnimeList:
     type: "object"
