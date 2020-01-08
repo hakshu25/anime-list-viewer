@@ -9,6 +9,7 @@ Rails.application.routes.draw do
             year: /\d{4}/,
             cour: /\d{1}/
           }
+      post 'anime_site_previews' => 'anime_site_previews#show'
     end
   end
 end
